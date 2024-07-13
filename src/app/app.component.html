@@ -1,0 +1,116 @@
+<div class="container">
+  <div class="row p-3">
+    <div class="col-6">
+      <h2 class="fs-2">Task Management App</h2>
+    </div>
+    <div class="col-6 text-end">
+      <button class="btn btn-success" (click)="openModel()">Add New</button>
+    </div>
+  </div>
+
+  <div  class="row justify-content-center align-items-center pt-4">
+    <div class="col-3">
+      <label for="filterPriority">Filter by Priority</label>
+      <select class="form-control" [(ngModel)]="filterPriority" (change)="applyFilter()">
+        <option value="">All</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    </div>
+    <div class="col-3">
+      <label for="filterStatus">Filter by Status</label>
+      <select class="form-control" [(ngModel)]="filterStatus" (change)="applyFilter()">
+        <option value="">All</option>
+        <option value="Not Started">Not Started</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row p-3">
+    <div class="col-12">
+      <div *ngIf="filteredTasks.length !== 0">
+        <div class="row">
+          <div *ngFor="let item of filteredTasks; let i = index" class="col-3">
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-6">{{item.title}}</div>
+                  <div class="col-6 text-end">{{item.Priority}}</div>
+                </div>
+              </div>
+              <div class="card-body">
+                <p>{{item.description}}</p>
+                
+                <div class="row pt-4">
+                  <div class="col-6"> {{item.dueDate}} </div>
+                  <div class="col-6 text-end "> {{item.status}}</div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="row">
+                  <button class="btn btn-outline-primary" (click)="openModel(i)">Edit</button>
+                  <button class="btn btn-outline-danger" (click)="onDelete(item)">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="filteredTasks.length === 0" class="row">
+        <div class="col-12 p-4 text-center">
+          <h3>No Task Found. Create New Record</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="myModal" #myModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create New Task</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="taskForm">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" formControlName="title" class="form-control" placeholder="Enter title">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" formControlName="description" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select class="form-control" formControlName="Priority">
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" formControlName="status">
+              <option>Not Started</option>
+              <option>In Progress</option>
+              <option>Completed</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dueDate">Due Date</label>
+            <input type="date" class="form-control" formControlName="dueDate">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="closeModel()">Close</button>
+        <button *ngIf="!editMode" type="button" class="btn btn-primary" (click)="saveTask()">Submit</button>
+        <button *ngIf="editMode" type="button" class="btn btn-success" (click)="updateTask()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
