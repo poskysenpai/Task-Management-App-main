@@ -1,11 +1,9 @@
 <div class="container">
   <div class="row p-3">
-    <div class="col-6">
-      <h2 class="fs-2">Task Management App</h2>
+    <div class="col-6 justify-content-center">
+      <h2 class="fs-1 text-white">Task Management App</h2>
     </div>
-    <div class="col-6 text-end">
-      <button class="btn btn-success" (click)="openModel()">Add New</button>
-    </div>
+    
   </div>
 
   <div  class="row justify-content-center align-items-center pt-4">
@@ -28,8 +26,10 @@
       </select>
     </div>
   </div>
-
-  <div class="row p-3">
+  <div class="text-end mr-10">
+    <button class="btn btn-success" (click)="openModel()">Add New +</button>
+  </div>
+  <div class="row px-3 pt-12">
     <div class="col-12">
       <div *ngIf="filteredTasks.length !== 0">
         <div class="row">
@@ -61,7 +61,7 @@
       </div>
       <div *ngIf="filteredTasks.length === 0" class="row">
         <div class="col-12 p-4 text-center">
-          <h3>No Task Found. Create New Record</h3>
+          <h3>No Task Found. Create New Task</h3>
         </div>
       </div>
     </div>
